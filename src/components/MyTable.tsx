@@ -240,7 +240,7 @@ export default function MyTable({
             ),
           )
         : tableRows,
-    [searchValue],
+    [searchValue, tableRows],
   );
 
   return (
@@ -297,9 +297,9 @@ export default function MyTable({
                     selected={selectedElements ? selectedElements[ind] : selected[ind]}
                     onChange={() => {
                       setSelected(selected.map((item, index) => (index !== ind ? item : !item)));
-                      if (setSelectedElements)
+                      if (setSelectedElements && selectedElements)
                         setSelectedElements(
-                          selected.map((item, index) => (index !== ind ? item : !item)),
+                          selectedElements.map((item, index) => (index !== ind ? item : !item)),
                         );
                     }}>
                     {(selectedElements ? selectedElements[ind] : selected[ind]) && <CheckIcon />}

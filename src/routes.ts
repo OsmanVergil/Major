@@ -16,8 +16,9 @@ import ClientPage from './pages/ClientPage';
 import AutoCardPage from './pages/AutoCardPage';
 import Constructor from './pages/Constructor';
 import SalesReport from './pages/SalesReport';
+import Login from './pages/Login';
 
-export const routes = [
+export const privateRoutes = [
   {
     path: '/',
     element: Main,
@@ -90,4 +91,13 @@ export const routes = [
     path: '/salesReport',
     element: SalesReport,
   },
+  {
+    path: '/*',
+    element: Main,
+  },
 ];
+
+export const publicRoutes = [{
+  path: '/*',
+  element: Login
+}]

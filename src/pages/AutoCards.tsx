@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom';
 import DataField from '../components/DataField';
 
 export default function AutoCards() {
+  const [showTable, setShowTable] = useState(false);
+  const setShowTrue = () => setShowTable(true)
   const cols = ['№', 'Марка', 'Модель', 'Поколение', 'Тип двигателя', 'Тип КПП', 'Тип кузова'];
 
   const [rows, setRows] = useState<autoCardProps[]>([
@@ -100,6 +102,8 @@ export default function AutoCards() {
   const [selected, setSelected] = React.useState(new Array(rows.length).fill(false));
   const deleteRows = () => {
     const elementsToDelete = selected.map((el, ind) => (el ? ind : -1));
+    console.log(elementsToDelete);
+    
     setRows(rows.filter((el, ind) => !elementsToDelete.includes(ind)));
     setSelected(new Array(rows.length).fill(false));
   };
@@ -111,7 +115,7 @@ export default function AutoCards() {
       <Navbar />
 
       <Stack direction={'row'} gap={4} m={'50px 90px'} alignItems={'center'}>
-        <MyButton onClick={handleOpenModalCreate}>Создать</MyButton>
+        <MyButton onClick={setShowTrue}>Сформировать</MyButton>
         <Modal open={openModalCreate} onClose={handleCloseModalCreate}>
           <Stack
             width={610}
@@ -178,15 +182,6 @@ export default function AutoCards() {
                 <Typography fontSize={'18px'}>Тип КПП:</Typography>
                 <DataField value={gearbox} setValue={setGearbox} />
               </Stack>
-
-              {/* <Stack
-                direction={'row'}
-                gap={3}
-                alignItems={'center'}
-                justifyContent={'space-between'}>
-                <Typography fontSize={'18px'}>Тип КПП:</Typography>
-                <DataField value={gearbox} setValue={setGearbox} />
-              </Stack> */}
 
               <Stack
                 direction={'row'}
@@ -256,13 +251,16 @@ export default function AutoCards() {
           </MenuItem>
         </Menu>
       </Stack>
-      {rows.length ? <MyTable
+      <MyButton style={{position: 'absolute', top: '180px', left: '90px', width: '200px'}} onClick={handleOpenModalCreate}>
+        Создать
+      </MyButton>
+      {rows.length ? (showTable && <MyTable
         tableColumns={cols}
         tableRows={rows}
         selectedElements={selected}
         setSelectedElements={setSelected}
         searchValue={searchValue}
-      /> : <Typography variant='h1' textAlign={'center'}> Нет данных
+      /> ): <Typography variant='h1' textAlign={'center'}> Нет данных
         </Typography>}
       
     </>

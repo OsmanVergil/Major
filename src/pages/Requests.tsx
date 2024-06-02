@@ -12,6 +12,8 @@ import DataField from '../components/DataField';
 
 export default function Requests() {
   const cols = ['№', 'Дата создания', 'Клиент', 'Автомобиль', 'Скан', 'Статус'];
+  const [showTable, setShowTable] = useState(false);
+  const setShowTrue = () => setShowTable(true)
   const [rows, setRows] = useState<requestsProps[]>([
     {
       number: 111,
@@ -69,10 +71,12 @@ export default function Requests() {
   return (
     <>
       <Navbar />
-      <Stack direction={'row'} gap={4} m={'50px 70px'} alignItems={'center'}>
+      <Stack direction={'row'} gap={4} m={'50px 70px'} alignItems={'center'} mb={'100px'}>
         <MyButton
-          endIcon={<DriveFolderUploadOutlinedIcon sx={{ transform: 'scale(1.4)', ml: '6px' }} />}>
-          Загрузить
+        onClick={setShowTrue}
+          // endIcon={<DriveFolderUploadOutlinedIcon sx={{ transform: 'scale(1.4)', ml: '6px' }} />}
+          >
+          Сформировать
         </MyButton>
         <MyButton
           endIcon={
@@ -118,7 +122,10 @@ export default function Requests() {
           </MenuItem>
         </Menu>
       </Stack>
-      <MyTable tableColumns={cols} tableRows={rows}/>
+      <MyButton style={{position: 'absolute', top: '190px', left: '70px', width: '205px'}}>
+        Создать
+      </MyButton>
+      {showTable && <MyTable tableColumns={cols} tableRows={rows}/>}
     </>
   );
 }

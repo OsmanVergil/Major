@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MyTable, { CarSale } from '../components/MyTable';
 import Navbar from '../components/Navbar';
 import { Button, Divider, Menu, MenuItem, Stack } from '@mui/material';
@@ -87,12 +87,14 @@ export default function ClientContracts() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [showTable, setShowTable] = useState(false);
+  const setShowTrue = () => setShowTable(true)
   return (
     <>
       <Navbar />
 
-      <Stack direction={'row'} gap={4} m={'50px 70px'} alignItems={'center'}>
-        <MyButton>Сформировать</MyButton>
+      <Stack direction={'row'} gap={4} m={'50px 70px'} alignItems={'center'} mb={'100px'}>
+        <MyButton  onClick={setShowTrue}>Сформировать</MyButton>
         <MyButton endIcon={<DeleteOutlineIcon sx={{ transform: 'scale(1.4)', ml: '6px' }} />}>
           Удалить
         </MyButton>
@@ -135,7 +137,10 @@ export default function ClientContracts() {
           </MenuItem>
         </Menu>
       </Stack>
-      <MyTable tableColumns={cols} tableRows={rows} />
+      <MyButton style={{position: 'absolute', top: '190px', left: '70px', width: '205px'}}>
+        Создать
+      </MyButton>
+      {showTable && <MyTable tableColumns={cols} tableRows={rows} />}
     </>
   );
 }

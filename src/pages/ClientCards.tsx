@@ -19,6 +19,8 @@ import {
 import DataField from '../components/DataField';
 
 export default function ClientCards() {
+  const [showTable, setShowTable] = useState(false);
+  const setShowTrue = () => setShowTable(true)
   const cols = [
     '№',
     'Фамилия',
@@ -149,8 +151,8 @@ export default function ClientCards() {
   return (
     <>
       <Navbar />
-      <Stack direction={'row'} gap={4} m={'50px 70px'}>
-        <MyButton onClick={handleOpenModalCreate}>Создать</MyButton>
+      <Stack direction={'row'} gap={4} m={'50px 70px'} mb={'100px'}>
+        <MyButton onClick={setShowTrue}>Сформировать</MyButton>
         <Modal open={openModalCreate} onClose={handleCloseModalCreate}>
           <Stack
             width={650}
@@ -290,9 +292,12 @@ export default function ClientCards() {
           </MyButton>
         </Link>
       </Stack>
+      <MyButton style={{position: 'absolute', top: '180px', left: '70px', width: '200px'}} onClick={handleOpenModalCreate}>
+        Создать
+      </MyButton>
 
       {rows.length ? (
-        <MyTable
+        showTable && <MyTable
           tableColumns={cols}
           tableRows={rows}
           selectedElements={selected}

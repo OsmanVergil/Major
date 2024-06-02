@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import {
   Box,
@@ -17,6 +17,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CheckIcon from '@mui/icons-material/Check';
 import ManagerTable from '../components/ManagerTable';
@@ -35,6 +36,8 @@ export default function SalesReport() {
     prop: 'Сумма выручки',
     ord: 'd',
   });
+  const [showDisplayedCols, setShowDisplayedCols] = React.useState(false)
+
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -44,6 +47,7 @@ export default function SalesReport() {
   const handleClose = (repType: string) => {
     setAnchorEl(null);
     setReportType(repType);
+    setShowTable(false)
   };
 
   const [anchorElSort, setAnchorElSort] = React.useState<null | HTMLElement>(null);
@@ -105,13 +109,14 @@ export default function SalesReport() {
     'Поколение',
     'Сумма выручки',
   ];
-
+  const [showTable, setShowTable] = useState(false);
+  const setShowTrue = () => setShowTable(true)
   return (
     <Box height={900}>
       <Navbar />
 
       <Stack direction={'row'} gap={4} m={'50px 100px'} alignItems={'center'}>
-        <MyButton>Сформировать</MyButton>
+        <MyButton onClick={setShowTrue}>Сформировать</MyButton>
         <MyButton endIcon={<DeleteOutlineIcon sx={{ transform: 'scale(1.4)', ml: '6px' }} />}>
           Удалить
         </MyButton>
@@ -344,22 +349,30 @@ export default function SalesReport() {
           sx={{
             width: '400px',
             height: '300px',
-            border: '1px solid black',
+            border: showDisplayedCols ? '1px solid black' : 'none',
             borderRadius: '10px',
             backgroundColor: 'white',
+            mr: 25,
           }}>
-          <Stack
-            alignItems={'center'}
+          <Button
+          onClick={() => {setShowDisplayedCols(!showDisplayedCols); console.log(showDisplayedCols)} }
+           endIcon={showDisplayedCols ? <ArrowDropDownIcon sx={{ transform: 'scale(1.5)' }}/> : <ArrowDropUpIcon sx={{ transform: 'scale(1.5)' }}/>}
             sx={{
               width: '400px',
               backgroundColor: '#e4e4e4',
               borderRadius: '10px',
               borderBottom: '1px solid black',
+              borderTop: !showDisplayedCols ? '1px solid black' : 'none',
+              borderInline: !showDisplayedCols ? '1px solid black' : 'none',
               p: '5px 0',
-            }}>
+              fontSize: '18px',
+              color: 'black',
+              textTransform: 'capitalize',
+            }}
+            >
             Отображаемые колонки:
-          </Stack>
-          <Box sx={{ maxHeight: '260px', overflowY: 'scroll' }}>
+          </Button>
+          {showDisplayedCols && <Box sx={{ maxHeight: '250px', overflowY: 'scroll' }}>
             {(reportType === 'По менеджеру' ? cols1 : cols2).map((col) => (
               <Stack direction={'row'} mt={1} alignItems={'center'} ml={1} gap={1}>
                 <ToggleButton
@@ -373,11 +386,11 @@ export default function SalesReport() {
                 <Typography>{col}</Typography>
               </Stack>
             ))}
-          </Box>
+          </Box>}
         </Box>
       </Stack>
 
-      {reportType === 'По менеджеру' ? <ManagerTable /> : <AutoTable />}
+      {showTable ? reportType === 'По менеджеру' ? <ManagerTable /> : <AutoTable/> : <></>}
     </Box>
   );
 }

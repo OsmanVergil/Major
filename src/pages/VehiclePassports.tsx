@@ -7,6 +7,8 @@ import MyInput from '../components/MyInput';
 import LocalPrintshopOutlinedIcon from '@mui/icons-material/LocalPrintshopOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
+
 
 export default function VehiclePassports() {
     const cols = [
@@ -62,7 +64,7 @@ export default function VehiclePassports() {
       <Navbar />
 
       <Stack direction={'row'} gap={4} m={'50px 100px'} alignItems={'center'}>
-        <MyButton>Создать</MyButton>
+        <MyButton endIcon={<DriveFolderUploadOutlinedIcon sx={{ transform: 'scale(1.4)', ml: '6px' }} />}>Загрузить</MyButton>
         <MyButton endIcon={<DeleteOutlineIcon sx={{ transform: 'scale(1.4)', ml: '6px' }} />}>
           Удалить
         </MyButton>

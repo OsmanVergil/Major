@@ -143,7 +143,7 @@ export default function Navbar() {
           </Link>
           <Link to="/vehiclePassports">
             <Button
-              sx={{ color: 'black', fontSize: '18px', textTransform: 'capitalize', ml: '12px' }}
+              sx={{ color: 'black', fontSize: '17px', textTransform: 'capitalize', ml: '12px' }}
               startIcon={<FolderCopyOutlinedIcon sx={{ transform: 'scale(1.2)', mr: '10px' }} />}>
               Паспорта транспортных средств
             </Button>

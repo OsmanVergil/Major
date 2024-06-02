@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import MyTable, { prepaidInvoicesProps } from '../components/MyTable';
 import { Button, Stack } from '@mui/material';
@@ -71,13 +71,14 @@ export default function PrepaidInvoices() {
       sum: '523395 руб.',
     },
   ];
-
+  const [showTable, setShowTable] = useState(false);
+  const setShowTrue = () => setShowTable(true)
   return (
     <>
       <Navbar />
 
-      <Stack direction={'row'} gap={4} m={'50px 90px'} alignItems={'center'}>
-        <MyButton>Создать</MyButton>
+      <Stack direction={'row'} gap={4} m={'50px 70px'} alignItems={'center'} mb={'100px'}>
+        <MyButton onClick={setShowTrue}>Сформировать</MyButton>
         <MyButton endIcon={<DeleteOutlineIcon sx={{ transform: 'scale(1.4)', ml: '6px' }} />}>
           Удалить
         </MyButton>
@@ -105,8 +106,10 @@ export default function PrepaidInvoices() {
           Создать кассовый чек
         </Button>
       </Stack>
-
-      <MyTable tableColumns={cols} tableRows={rows} />
+      <MyButton style={{position: 'absolute', top: '190px', left: '70px', width: '205px'}}>
+        Создать
+      </MyButton>
+      {showTable && <MyTable tableColumns={cols} tableRows={rows} />}
     </>
   );
 }
